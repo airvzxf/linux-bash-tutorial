@@ -1,0 +1,259 @@
+================================================================================
+Shell types
+================================================================================
+
+- sh or Bourne Shell: the original shell still used on UNIX systems and in UNIX-related environments.
+- bash or Bourne Again shell: the standard GNU shell, intuitive and flexible.
+- csh or C shell
+- tcsh or TENEX C shell: a superset of the common C shell, enhancing user-friendliness and speed.
+- ksh or the Korn shell: sometimes appreciated by people with a UNIX background.
+
+
+
+================================================================================
+Shell init files
+================================================================================
+
+Invoked as an interactive non-login shell
+`~/.bashrc`
+`~/.bash_profile`
+
+Invoked with the sh command
+`/etc/profile`
+`~/.profile`
+
+
+
+================================================================================
+Prompt
+================================================================================
+
+`echo $PS1`
+
+
+
+================================================================================
+Creating and given permisions
+================================================================================
+
+Creation
+`touch script_name.sh`
+
+Permissions
+`chmod u+x script_name.sh`
+`chmod u+x *.sh`
+
+Execution
+`./script_name.sh`
+
+Use an specific Shell type:
+`rbash script_name.sh`
+`sh script_name.sh`
+`bash -x script_name.sh`
+
+Code Comments
+Using this symbol `#`
+
+# Examples
+`./01.sh`
+`./02.sh`
+
+
+
+================================================================================
+Debugging Bash scripts
+================================================================================
+set -x			# activate debugging from here
+set +x			# stop debugging from here
+
+Other debug options
+
+set -f		set -o noglob		Disable file name generation using metacharacters (globbing).
+set -v		set -o verbose		Prints shell input lines as they are read.
+set -x		set -o xtrace		Print command traces before executing command.
+
+The -e option means "if any pipeline ever ends with a non-zero ('error') exit status, terminate the script immediately".
+
+# Example
+`./03.sh`
+
+
+
+================================================================================
+Variables
+================================================================================
+
+Variables are case sensitive and can contain digits, but a name starting with a digit is not allowed
+Giving local variables a lowercase name is a convention which is sometimes applied. However, you are free to use the names you want or to mix cases.
+
+By content
+- String		`MYVAR="2"`
+- Integer		`MYVAR=3`
+- Constant		`readonly MYVAR="I can't change"`
+- Array			`MYVAR=(hello hola ciao)`
+
+
+Reserved Bourne shell variables
+CDPATH, HOME, IFS, MAIL, MAILPATH, OPTARG, OPTIND, PATH, PS1, PS2
+
+Theres more reserved variables for Bash variables
+
+
+
+================================================================================
+Send parameters
+================================================================================
+
+Execute the script and put after the parameters
+
+`./04.sh hola 1 "How are you?"`
+
+
+
+================================================================================
+Brace expansion
+================================================================================
+`echo sp{el,il,al}l`
+spell spill spall
+
+`./05.sh`
+
+
+
+================================================================================
+Arithmetic expansion
+================================================================================
+VAR++ and VAR--				variable post-increment and post-decrement
+++VAR and --VAR				variable pre-increment and pre-decrement
+- and +						unary minus and plus
+! and ~						logical and bitwise negation
+**							exponentiation
+*, / and %					multiplication, division, remainder
++ and -						addition, subtraction
+<< and >>					left and right bitwise shifts
+<=, >=, < and >				comparison operators
+== and !=					equality and inequality
+&							bitwise AND
+^							bitwise exclusive OR
+|							bitwise OR
+&&							logical AND
+||							logical OR
+expr ? expr : expr			conditional evaluation
+=, *=, /=, %=, +=, -=,		assignments
+<<=, >>=, &=, ^= and |=
+,							separator between expressions
+
+
+`echo $[365+24]` # This is the best way
+`echo $(365+24)` # The plus operation is not working with this.
+
+
+
+================================================================================
+Alias
+================================================================================
+
+`alias showMe='ls -lha && echo "You said show me!"'`
+
+`showMe`
+
+`unalias showMe`
+
+
+
+================================================================================
+More Bash options
+================================================================================
+
+`set -o`
+allexport				off
+braceexpand				on
+emacs					on
+errexit					off
+hashall					on
+histexpand				on
+history					on
+ignoreeof				off
+interactive-comments	on
+keyword					off
+monitor					on
+noclobber				off
+noexec					off
+noglob					off
+nolog					off
+notify					off
+nounset					off
+onecmd					off
+physical				off
+posix					off
+privileged				off
+verbose					off
+vi						off
+xtrace					off
+
+
+
+================================================================================
+Regular expressions
+================================================================================
+
+`grep -n root /etc/passwd`
+`grep ^root /etc/passwd`
+`grep [yf] /etc/group`
+
+Apps:
+grep, sed, awk
+
+
+
+================================================================================
+More to discover...
+================================================================================
+
+`echo` built-in command
+--------------------------------------------------------------------------------
+-e: interprets backslash-escaped characters.
+-n: suppresses the trailing newline.
+
+
+Catching user input
+--------------------------------------------------------------------------------
+`read year`
+`read -n 1 gender`
+
+
+Redirection and file descriptors
+--------------------------------------------------------------------------------
+ls -l /proc/self/fd/ > fdtest.txt
+
+
+Redirection of errors
+--------------------------------------------------------------------------------
+ls -l * 2> /var/tmp/unaccessible-in-spool
+ls -l * > /var/tmp/spoollist 2>&1
+ls -l * 2 >& 1 > /var/tmp/spoollist
+ 
+
+File input and output
+--------------------------------------------------------------------------------
+
+
+Repetitive tasks
+--------------------------------------------------------------------------------
+for, while and until loops
+break and continue
+select statement
+
+
+Functions
+--------------------------------------------------------------------------------
+test () {
+	echo "Positional parameter 1 in the function is $1."
+}
+
+test other_param
+
+
+Signals
+--------------------------------------------------------------------------------
+Usage of signals with kill proccess
